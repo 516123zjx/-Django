@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.css'%}">
+    <link rel="stylesheet" href="{% static 'css/left.css'%}">
+
+    <!-- 全局 -->
+    <style>
+        .hide {
+            display: none;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #888b8d;
+        }
+
+        .left-bar {
+            width: 20%;
+            background-color: #2a2b2c;
+            color: rgb(255, 255, 255);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .left-bar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        span {
+            color: aliceblue;
+            font-size: 12px;
+            width: 17px;
+        }
+    </style>
+
+
+
+
+
+
+    <!-- 正文区 -->
+    <style>
+        .content {
+            flex: 1;
+            background-color: rgb(167, 167, 167);
+            padding: 10px;
+            /* overflow-y: auto; */
+        }
+
+        .right-bar {
+            width: 20%;
+            background-color: #1a1a1a;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+
+    {% block css %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="left-bar">
+        <ul>
+            <div class="list-group">
+                <!-- <li><a href="{% url 'initial' %}" class="custom-btn btn-15" style="width: 100%;"><span
+                            class="glyphicon glyphicon-file" aria-hidden="true"></span> 总页</a></li> -->
+                <li><a href="{% url 'help' %}" class="custom-btn btn-15" style="width: 100%;"><span
+                            class="glyphicon glyphicon-file" aria-hidden="true"></span> 帮助页</a></li>
+                <li><a href="{% url 'plan' %}" class="custom-btn btn-15" style="width: 100%;"><span
+                            class="glyphicon glyphicon-picture" aria-hidden="true"></span> 风景地标识别</a></li>
+                <li><a href="{% url 'write' %}" class="custom-btn btn-15" style="width: 100%;"><span
+                            class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> 摄影博客助手</a></li>
+                <div class="btn-group" role="group" style="width: 100%;">
+                    <a class="custom-btn btn-15" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="width: 100%;"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        个人中心
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu"
+                        style="width: 100%; margin: 0 0 0 10px; background-color:rgb(240, 240, 240) ;">
+                        <li><a href="{% url 'personal' %}" style="border-radius: 3px; ">个人信息</a></li>
+                        <li><a onclick="logout() " style="border-radius: 3px;">退出登录</a></li>
+                    </ul>
+                </div>
+            </div>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div class="right-bar">
+        {% block right-bar %}
+        {% endblock %}
+    </div>
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+    <!-- 登出事件 -->
+    <script type="text/javascript">
+        function logout() {
+            window.location.href = "{% url 'logout' %}";
+        }
+    </script>
+    {% block js%}
+    {% endblock %}
+
+
+</body>
+
+</html>

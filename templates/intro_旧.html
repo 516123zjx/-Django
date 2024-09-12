@@ -1,0 +1,147 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/log_reg.css'%}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .logreg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div style="width:500px;height:500px;"></div>
+    <div class="logreg">
+        <div class="log_reg_panel">
+            <input type="radio" id="switch-open" name="switch" />
+            <input type="radio" id="switch-close" name="switch" />
+            <form class="login" id="login-form" action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div id="login-message" class="alert" style="display: none;"></div>
+                <h1>登录</h1>
+                <div class="group"><i class="fa fa-envelope"></i>
+                    <input type="text" id="name" name="name" placeholder="请输入用户名" />
+                    <label for="name"></label>
+                </div>
+                <div class="group"><i class="fa fa-unlock-alt"></i>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" />
+                    <label for="password"></label>
+                </div>
+                <input type="submit" value="确认登录" />
+            </form>
+            <div class="register">
+                <label class="button-open" for="switch-open"></label>
+                <label class="button-close" for="switch-close"></label>
+                <form class="inner" id="register-form" action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    <div id="register-message" class="alert" style="display: none;"></div>
+                    <h1>注册</h1>
+                    <div class="group"><i class="fa fa-user"></i>
+                        <input type="text" id="name" name="name" placeholder="请输入用户名" />
+                        <label for="name"></label>
+                    </div>
+                    <div class="group"><i class="fa fa-envelope"></i>
+                        <input type="password" id="password" name="password" placeholder="请设置密码" />
+                        <label for="password"></label>
+                    </div>
+                    <div class="group"><i class="fa fa-unlock-alt"></i>
+                        <input type="password" id="confirm-password" name="confirm_password" placeholder="请再次确认密码" />
+                        <label for="confirm-password"></label>
+                    </div>
+                    <input type="submit" value="确认注册" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+
+    <!-- 注册事件 -->
+    <script>
+        $(document).ready(function () {
+            $('#register-form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: formData,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            // 注册成功时显示成功消息
+                            $('#register-message').removeClass('alert-danger').addClass('alert-success').text(response.success).show();
+                        } else if (response.error) {
+                            // 注册失败时显示错误消息
+                            $('#register-message').removeClass('alert-success').addClass('alert-danger').text(response.error).show();
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // 请求失败时处理
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+
+        });
+    </script>
+
+    <!-- 登陆事件 -->
+    <script>
+        $(document).ready(function () {
+            $('#login-form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: formData,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            // 登录成功时显示成功消息
+                            $('#login-message').removeClass('alert-danger').addClass('alert-success').text(response.success).show();
+                            // 可以根据需要处理成功后的逻辑，例如关闭模态框或者重定向页面
+                            setTimeout(function () {
+                                window.location.href = '/help/';
+                            }, 500);
+                            // 延迟1秒后跳转到main_page.html
+                        } else if (response.error) {
+                            // 登录失败时显示错误消息
+                            $('#login-message').removeClass('alert-success').addClass('alert-danger').text(response.error).show();
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // 请求失败时处理
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

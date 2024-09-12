@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* styles.css */
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: gray;
+        }
+
+        #mask {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            pointer-events: none;
+            background: url('https://plus.unsplash.com/premium_photo-1683910767532-3a25b821f7ae?q=80&w=2608&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+            mask-image: url("/media/mask1.png");
+            background-size: cover;
+            mix-blend-mode: normal;
+        }
+        /* 固定内部元素 */
+        #inmask {
+            position: fixed;
+            top:0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+        <div id="background"></div>
+        <div id="mask">
+            <div id="inmask">
+                <h1>niahoadfsafaskdfljasdfjasldfka</h1>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        const childElement = document.querySelector('#inmask');
+        const rect = childElement.getBoundingClientRect(); // 获取元素相对于视口的位置信息
+        const leftOffset = rect.left + window.scrollX; // 计算元素的左偏移量，包括页面滚动的部分
+        const topOffset = rect.top + window.scrollY; // 计算元素的上偏移量，包括页面滚动的部分
+
+        childElement.style.position = 'fixed';
+        childElement.style.left = `${leftOffset}px+500px`; // 设置元素的左偏移量
+        childElement.style.top = `${topOffset}px+500px`; // 设置元素的上偏移量
+    </script>
+
+    <script>
+        // script.js
+        const mask = document.getElementById('mask');
+        mask.style.transition = 'left 0.2s linear, top 0.2s linear';
+        document.addEventListener('mousemove', function (e) {
+            // Adjust so that the cursor is at the center of the mask
+            mask.style.left = `${e.clientX - mask.offsetWidth / 2}px`;
+            mask.style.top = `${e.clientY - mask.offsetHeight / 2}px`;
+        });
+    </script>
+</body>
+
+</html>

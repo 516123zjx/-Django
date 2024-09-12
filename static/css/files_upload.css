@@ -1,0 +1,122 @@
+/* 文件上传组件 */
+
+
+
+
+.btn-13 {
+    background-color: #a92828;
+  background-image: linear-gradient(315deg, #a9a9a9 0%, #a9a9a9 74%);
+    border: none;
+    z-index: 1;
+  }
+  .btn-13:after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: 5px;
+     background-color: #a9a9a9;
+  background-image: linear-gradient(315deg, #a9a9a9 0%, #a9a9a9 74%);
+    box-shadow:
+     -2px -2px 5px 0px rgba(145, 145, 145, 0.6),
+     -2px -2px 3px 0px rgba(145, 145, 145, 0.6),
+     5px 5px 12px 0px rgba(24, 24, 24, 0.133),
+     4px 4px 5px 0px rgba(24, 24, 24, 0.133);
+    transition: all 0.3s ease;
+  }
+  .btn-13:hover {
+    color: #ebebebdf;
+  }
+  .btn-13:hover:after {
+    top: 0;
+    height: 100%;
+  }
+  .btn-13:active {
+    top: 2px;
+  }
+  .btn-13 {
+    margin: 20px;
+}
+  .btn-13 {
+    width: 150px;
+    height: 40px;
+    color: #f9f9f9;
+    letter-spacing:1px;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background:transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+     box-shadow:inset 2px 2px 2px 0px rgba(219, 219, 219, 0.5),
+     3px 3px 2px 0px rgba(54, 54, 54, 0.168),
+     2px 2px 5px 0px rgba(54, 54, 54, 0.168);
+    outline: none;
+  }
+
+
+
+/* 上传文件区域 */
+#upload-file-area {
+    cursor: pointer;
+    width: 120px;
+    height: 120px;
+    border: 1px solid rgb(209, 209, 209);
+    background-color: rgb(157, 157, 157);
+    border-radius: 4px;
+}
+
+/* 隐藏实际输入区域 */
+#upload-file-area input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+/* 更改悬停样式 */
+#upload-file-area:hover {
+    border-color: rgb(194, 199, 202);
+    background-color: rgb(204, 207, 209);
+}
+
+#files_preview {
+    border: 1px solid rgb(184, 185, 186);
+    max-height: 200px;
+    /* 添加垂直滚动条 */
+    overflow-y: auto;
+    margin: 10px 0px;
+}
+
+/* 文件预览框:有文件是div,无文件是p */
+#files_preview>div,
+#files_preview>p {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid rgb(43, 43, 43);
+    background-color: rgb(206, 206, 206);
+    padding: 5px;
+    margin: 2px 1px;
+    max-height: 58px;
+}
+#files_preview{
+    border-radius: 4px;
+}
+
+/* 文件预览-图像 */
+#files_preview img {
+    height: 40px;
+    order: 1;
+}
+
+/* 文件预览-字 */
+#files_preview p {
+    line-height: 16px;
+    /* padding-left: 10px; */
+}

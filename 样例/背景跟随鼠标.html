@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.css'%}">
+  <!-- 全局 -->
+
+  <style>
+
+
+    body {
+      background: linear-gradient(45deg, #8500ff, #5acaff);
+      /*背景颜色渐变*/
+      height: 100vh;
+      /*高度：100视窗*/
+    }
+
+    #container {
+      position: absolute;
+      /*绝对定位*/
+      top: 10%;
+      /*距上部*/
+      left: 10%;
+      right: 10%;
+      bottom: 10%;
+      border-radius: 10px;
+      /*圆角边框*/
+      display: flex;
+      /*弹性盒模型*/
+      justify-content: center;
+      /*主轴对齐方式*/
+      align-items: center;
+      /*交叉轴对齐方式*/
+      background: url("{% static 'img/3.png' %}"), #151729;
+      /*背景图片，颜色*/
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      /*背景阴影*/
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id='container'>
+  </div>
+  <script>
+    // 根据id获取元素
+    const container = document.getElementById('container');
+    // 窗口的鼠标移动事件,传入event对象
+    window.onmousemove = function (e) {
+      // 返回被触发时的鼠标X，Y位置
+      let x = e.clientX / 5
+      y = e.clientY / 5;
+      // 将容器的背景图片定位进行修改
+      container.style.backgroundPositionX = x + 'px';
+      container.style.backgroundPositionY = y + 'px';
+    }
+  </script>
+
+</body>
+
+</html>
+

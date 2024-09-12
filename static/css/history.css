@@ -1,0 +1,25 @@
+
+/* 修饰一下答案框 */
+#answer_panel {
+    position: relative;
+    top: 10vh;
+    width: 50vw;
+    margin: auto;
+}
+
+#answer_panel,
+#answer_panel .panel-heading,
+#answer_panel .panel-title,
+#answer_panel .panel-body {
+    background-color: transparent;
+    color:rgb(248, 248, 248);
+    text-shadow: 4px  rgba(0, 0, 0, 0.5);
+}
+
+#answer_panel .panel-body {
+    margin: 0 0;
+}
+
+
+
+

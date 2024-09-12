@@ -1,0 +1,363 @@
+{% extends "layout.html" %}
+{% load static %}
+
+
+{% block css %}
+
+<style>
+    .hide {
+        display: none;
+    }
+
+    .right-bar {
+        display: none;
+    }
+
+    .btn-13 {
+        background-color: #a9a9a9;
+        background-image: linear-gradient(315deg, #a9a9a9 0%, #a9a9a9 74%);
+        border: none;
+        z-index: 1;
+    }
+
+    .btn-13:after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: 5px;
+        background-color: #dcdcdc;
+        background-image: linear-gradient(315deg, #dcdcdc 0%, #dcdcdc 74%);
+        box-shadow:
+            -4px -4px 12px 0px rgba(207, 207, 207, 0.6),
+            -3px -3px 4px 0px rgba(207, 207, 207, 0.6),
+            5px 5px 12px 0px #0002,
+            4px 4px 5px 0px #0001;
+        transition: all 0.3s ease;
+    }
+
+    .btn-13:hover {
+        color: #fff;
+    }
+
+    .btn-13:hover:after {
+        top: 0;
+        height: 100%;
+    }
+
+    .btn-13:active {
+        top: 2px;
+    }
+
+    .btn-13 {
+        margin: 5px 0;
+    }
+
+    .btn-13 {
+        width: 130px;
+        height: 40px;
+        color: #f9f9f9;
+        border-radius: 5px;
+        padding: 8px 20px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+            7px 7px 20px 0px rgba(0, 0, 0, .1),
+            4px 4px 5px 0px rgba(0, 0, 0, .1);
+        outline: none;
+    }
+</style>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        display: flex;
+    }
+
+    .sidebar {
+        width: 100px;
+        background-color: #989898;
+        color: white;
+        height: 100vh;
+        padding-top: 20px;
+        box-sizing: border-box;
+    }
+
+    .sidebar a {
+        padding: 15px;
+        text-decoration: none;
+        color: white;
+        display: block;
+    }
+
+    .sidebar a:hover {
+        background-color: #575757;
+    }
+
+    .container {
+        flex: 1;
+        padding: 20px;
+        box-sizing: border-box;
+        height: 600px;
+        width: 800px;
+    }
+
+
+
+    .form-container {
+        display: flex;
+
+    }
+
+    .form-container .side {
+        width: 150px;
+        border-right: 1px solid #ccc;
+        padding-right: 20px;
+        margin-right: 20px;
+        box-sizing: border-box;
+    }
+
+    .form-container .main {
+        flex: 1;
+    }
+
+    .form-container input[type="password"],
+    .form-container input[type="text"]{
+        width: 300px;
+        padding: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+    .form-container button {
+        padding: 10px 20px;
+        background-color: #303030;
+        color: rgb(255, 255, 255);
+        border: none;
+        cursor: pointer;
+    }
+
+    .form-container button:hover {
+        background-color: #757575;
+    }
+
+    /* 更改密码输入面板 */
+    #zjx_update_panel {
+        max-width: 300px;
+        border: 1px solid rgb(149, 149, 149);
+    }
+
+    /* 更改密码输入框 */
+    #zjx_update_box input {
+        display: inline-block;
+        max-width: 90%;
+        border: 1px solid rgb(103, 103, 103);
+    }
+</style>
+<link rel="stylesheet" href="{% static 'css/profile.css'%}">
+
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+    <div class="profile" style="display: flex;">
+        <form id="update_profile" action="{% url 'update_profile' %}" method="post" enctype="multipart/form-data">
+            <div id="upload-file-area">
+                <input type="file" name="avatars" id="avatars">
+            </div>
+            {% csrf_token %}
+            <!-- 待上传文件预览区域 -->
+            <div id="files_preview">
+                <img src={{profile_url}} alt="头像" title="点击可上传">
+            </div>
+            <input id="profile_submit" type="submit" value="更新头像"
+                style="color: azure; background-color: #303030; border-radius: 3px;">
+        </form>
+        <div style="position:relative;left:50px;top:20px;">
+            <div style="font-size: small; color: #575757;">用户名 {{user_name}}</div>
+            <div style="font-size: small; color: #575757;">UID:{{uid}}</div>
+            <div style="font-size: small; color: #575757;">Email:{{email}}</div>
+        </div>
+    </div>
+    <div class="form-container">
+        <div class="side">
+            <button class="custom-btn btn-13" id="to_password" onclick="to_password()">修改密码</button><br><br>
+            <button class="custom-btn btn-13" id="to_name" onclick="to_name()">修改用户名</button><br><br>
+            <button class="custom-btn btn-13" id="to_email" onclick="to_email()">修改邮箱</button><br><br>
+        </div>
+        <div class="main">
+            <div id="zjx_update_panel" class="panel panel-default">
+                <div id="zjx_update_box" class="panel-body"
+                    style="padding: 20px 0 20px 20px;border-radius: 8px; background-color: #ececece5;">
+                    <div id="update-message" class="alert" style="display: none;"></div>
+                    <form id="update_password_form" action="{% url 'update_password' %}" method="post">
+                        {% csrf_token %}
+                        <input type="password" placeholder="您的密码" name="password" style="border-radius: 4px;"><br>
+                        <input type="password" placeholder="请输入新的密码" name="new_password"
+                            style="border-radius: 4px;"><br>
+                        <input type="password" placeholder="请再次输入" name="new_confirm_password"
+                            style="border-radius: 4px;"><br>
+                        <button type="submit" class="custom-btn btn-13" value="确认修改"
+                            style="font-size:12px; width: 90px; height: 35px;">确认修改</button>
+                    </form>
+                    <form id="update_name_form" class="hide" action="{% url 'update_name' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" placeholder="您的新用户名" name="new_name" style="border-radius: 4px;"><br>
+                        <button type="submit" class="custom-btn btn-13" value="确认修改"
+                            style="font-size:12px; width: 90px; height: 35px;">确认修改</button>
+                    </form>
+                    <form id="update_email_form" class="hide" action="{% url 'update_email' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" placeholder="您的新邮箱" name="new_email" style="border-radius: 4px;"><br>
+                        <button type="submit" class="custom-btn btn-13" value="确认修改"
+                            style="font-size:12px; width: 90px; height: 35px;">确认修改</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+
+
+    {% block right-bar %}
+
+    {% endblock %}
+
+
+
+    {% block js %}
+
+    <!-- 按钮绑定 -->
+    <script>
+        function to_password(){
+            $('#update-message').hide();
+            $('#update_password_form').removeClass('hide');
+            $('#update_name_form').addClass('hide');
+            $('#update_email_form').addClass('hide');
+        }
+        function to_name(){
+            $('#update-message').hide();
+            $('#update_password_form').addClass('hide');
+            $('#update_name_form').removeClass('hide');
+            $('#update_email_form').addClass('hide');
+        }
+        function to_email(){
+            $('#update-message').hide();
+            $('#update_password_form').addClass('hide');
+            $('#update_name_form').addClass('hide');
+            $('#update_email_form').removeClass('hide');
+        }
+    </script>
+
+    <!-- 修改密码事件 -->
+    <script>
+        $(document).ready(function () {
+            $('#update_password_form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: formData,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            // 修改密码成功时显示
+                            $('#update-message').removeClass('alert-danger').addClass('alert-success').text(response.success).show();
+                        } else if (response.error) {
+                            // 修改密码失败时显示
+                            $('#update-message').removeClass('alert-success').addClass('alert-danger').text(response.error).show();
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // 请求失败时处理
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- 修改名称事件 -->
+    <script>
+        $(document).ready(function () {
+            $('#update_name_form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: formData,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            // 修改密码成功时显示
+                            $('#update-message').removeClass('alert-danger').addClass('alert-success').text(response.success).show();
+                        } else if (response.error) {
+                            // 修改密码失败时显示
+                            $('#update-message').removeClass('alert-success').addClass('alert-danger').text(response.error).show();
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // 请求失败时处理
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- 修改邮箱事件 -->
+    <script>
+        $(document).ready(function () {
+            $('#update_email_form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: formData,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            // 修改密码成功时显示
+                            $('#update-message').removeClass('alert-danger').addClass('alert-success').text(response.success).show();
+                        } else if (response.error) {
+                            // 修改密码失败时显示
+                            $('#update-message').removeClass('alert-success').addClass('alert-danger').text(response.error).show();
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // 请求失败时处理
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <!-- 头像更新上传 -->
+    <script src="{% static 'js/files_upload.js' %}"></script>
+
+    {% endblock %}

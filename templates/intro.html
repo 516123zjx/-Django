@@ -1,0 +1,345 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/log_reg.css'%}">
+    <link rel="stylesheet" href="{% static 'css/intro_carousel.css'%}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            max-height: 100vh;
+            overflow: hidden;
+        }
+
+        .logreg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+
+
+    <!-- 灰彩区域 -->
+    <style>
+        body {
+            font-family: "KaiTi", "楷体", "KaiTi_GB2312", Arial, sans-serif;
+        }
+        #blob {
+            pointer-events: none;
+            z-index: 100;
+            height: 3000px;
+            aspect-ratio: 1;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            translate: -50% -50%;
+            background: radial-gradient(circle at center, transparent, transparent 20vh, white 22vh, white);
+            mix-blend-mode: color;
+        }
+
+
+    </style>
+    <!-- 镜头css -->
+    <style>
+        #compassrose {
+            pointer-events: none;
+            z-index: 200;
+            position: fixed;
+            width: 40vh;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            translate: -50% -50%;
+        }
+
+        #compassrose #roseline,
+        #compassrose #majline {
+            stroke: #eee;
+            stroke-width: 1.5;
+        }
+
+        #compassrose text {
+            font-family: Montserrat, sans-serif;
+            font-size: 10;
+            fill: #eee;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- 镜头svg -->
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500"
+        id="compassrose">
+        <defs>
+            <symbol>
+                <line x1="40" y1="250" x2="50" y2="250" id="roseline" />
+                <line x1="40" y1="250" x2="60" y2="250" id="majline" />
+                <path d="M10,250a240,240 0 1,0 480,0a240,240 0 1,0 -480,0" id="rosecircle" />
+            </symbol>
+        </defs>
+    </svg>
+    <!-- 灰彩区域 -->
+    <div id="blob"></div>
+
+    <!-- 登陆注册面板 -->
+    <div class="logreg" style="position: absolute; z-index: 10;align-self: center;right: 0;">
+        <div class="log_reg_panel">
+            <input type="radio" id="switch-open" name="switch" />
+            <input type="radio" id="switch-close" name="switch" />
+            <form class="login" id="login-form" action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div id="login-message" class="alert" style="display: none;"></div>
+                <h1>登录</h1>
+                <div class="group"><i class="fa fa-envelope"></i>
+                    <input type="text" id="name" name="name" placeholder="请输入用户名" />
+                    <label for="name"></label>
+                </div>
+                <div class="group"><i class="fa fa-unlock-alt"></i>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" />
+                    <label for="password"></label>
+                </div>
+                <input type="submit" value="确认登录" />
+            </form>
+            <div class="register">
+                <label class="button-open" for="switch-open"></label>
+                <label class="button-close" for="switch-close"></label>
+                <form class="inner" id="register-form" action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    <div id="register-message" class="alert" style="display: none;"></div>
+                    <h1>注册</h1>
+                    <div class="group"><i class="fa fa-user"></i>
+                        <input type="text" id="name" name="name" placeholder="请输入用户名" />
+                        <label for="name"></label>
+                    </div>
+                    <div class="group"><i class="fa fa-user"></i>
+                        <input type="text" id="email" name="email" placeholder="请输入电子邮箱" />
+                        <label for="email"></label>
+                    </div>
+                    <div class="group"><i class="fa fa-envelope"></i>
+                        <input type="password" id="password" name="password" placeholder="请设置密码" />
+                        <label for="password"></label>
+                    </div>
+                    <div class="group"><i class="fa fa-unlock-alt"></i>
+                        <input type="password" id="confirm-password" name="confirm_password" placeholder="请再次确认密码" />
+                        <label for="confirm-password"></label>
+                    </div>
+                    <input type="submit" value="确认注册" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 背景轮播图 -->
+    <div class="slider" id="slider"
+        style="--img-prev:url(https://lh3.googleusercontent.com/aC9nyW5dhaYFmWD8fcf8DApjpH08eHEkbCHqmUPHRQ5T3jK-QyNKZYVMehmrvyPdEA_KxWvgZ3_kyOOYOAv99Ow3UoKSvEloleVKGSfLOwOyDV3Q6Dwi1G-NYoa9-t_ofmmskE6BYnVIOnIz2HWlMcijzIEwvKAL_R4z63DaLgG0z_OcGiSQHunwGAPXrBQUv42ZXuIMODq4zxDHczSxJ72b0-_udtdQK3JuT2X8nXCwFoF7GxmOpzXS0H5f50DuCbXoXcx-O7bgBMCXZdMpTxB27-wdXeLmxpYUySXgjSN2NAKmK16DmGLYvw5tMlrqwb8h4MJEEbXjP1pjPxXsahb7UZseEGyn80uLjATANJvusyJWCtzkkxYXPz-yI1rDvfEJKe2eyA-5AvFlzFBSwBMASn8f7mXinUrXMMREkJQjoi89NfZ91G7253OEVQOqcWxddiYtcHCO5v6Pl3QfV2SUTWXgggscDSY2ezjSPpYERNTXnIM_aCyWmIG7ybrfqOB0eVYBAgynyuPVbjd4KuZWZq2Dfu33HX1RuPKglbOuZGD1QbpJnruvUVkAmjDXI40ENN7X=w1600-h766);">
+        <div class="slider__content" id="slider-content">
+            <div class="slider__images">
+                <div class="slider__images-item slider__images-item--active" data-id="1"><img
+                        src="{% static 'img/slide1.jpg' %}" />
+                </div>
+                <div class="slider__images-item" data-id="2"><img
+                        src="{% static 'img/slide2.jpg' %}" />
+                </div>
+                <div class="slider__images-item" data-id="3"><img
+                        src="{% static 'img/slide3.jpg' %}" />
+                </div>
+            </div>
+            <div class="slider__text">
+                <div class="slider__text-item slider__text-item--active" data-id="1">
+                    <div class="slider__text-item-head">
+                        <h3>光影智迹</h3>
+                    </div>
+                    <div class="slider__text-item-info">
+                        <p>“光影流转，灵感飞扬；在旅程与文字间，邂逅美好瞬间。”</p>
+                    </div>
+                </div>
+                <div class="slider__text-item" data-id="2">
+                    <div class="slider__text-item-head">
+                        <h3>摄影计划助手</h3>
+                    </div>
+                    <div class="slider__text-item-info">
+                        <p>“解码风景密码，开启摄影之旅。”</p>
+                    </div>
+                </div>
+                <div class="slider__text-item" data-id="3">
+                    <div class="slider__text-item-head">
+                        <h3>博客编写助手</h3>
+                    </div>
+                    <div class="slider__text-item-info">
+                        <p>“从镜头到笔尖，让每一帧都变成动人的篇章。”</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider__nav">
+            <div class="slider__nav-arrows">
+                <div class="slider__nav-arrow slider__nav-arrow--left" id="left">to left</div>
+                <div class="slider__nav-arrow slider__nav-arrow--right" id="right">to right</div>
+            </div>
+            <div class="slider__nav-dots" id="slider-dots">
+                <div class="slider__nav-dot slider__nav-dot--active" data-id="1"></div>
+                <div class="slider__nav-dot" data-id="2"></div>
+                <div class="slider__nav-dot" data-id="3"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/intro_carousel.js' %}"></script>
+
+    <!-- 注册事件 -->
+    <script>
+        $(document).ready(function () {
+            $('#register-form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: formData,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            // 注册成功时显示成功消息
+                            $('#register-message').removeClass('alert-danger').addClass('alert-success').text(response.success).show();
+                        } else if (response.error) {
+                            // 注册失败时显示错误消息
+                            $('#register-message').removeClass('alert-success').addClass('alert-danger').text(response.error).show();
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // 请求失败时处理
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+
+        });
+    </script>
+
+    <!-- 登陆事件 -->
+    <script>
+        $(document).ready(function () {
+            $('#login-form').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var formData = form.serialize();
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: formData,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            // 登录成功时显示成功消息
+                            $('#login-message').removeClass('alert-danger').addClass('alert-success').text(response.success).show();
+                            // 可以根据需要处理成功后的逻辑，例如关闭模态框或者重定向页面
+                            setTimeout(function () {
+                                window.location.href = '/help/';
+                            }, 500);
+                            // 延迟1秒后跳转到main_page.html
+                        } else if (response.error) {
+                            // 登录失败时显示错误消息
+                            $('#login-message').removeClass('alert-success').addClass('alert-danger').text(response.error).show();
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // 请求失败时处理
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- 镜头svg脚本 -->
+    <script>
+        var lineInc = 2,
+            majMarkDegree = 10,
+            degreeInc = 30,
+            compassrose = document.getElementById("compassrose"),
+            xmlns = "http://www.w3.org/2000/svg",
+            xlink = "http://www.w3.org/1999/xlink";
+        if (lineInc > 0) {
+            for (var i = 0; i < 360; i += lineInc) {
+                var newline = document.createElementNS(xmlns, 'use');
+                if (i % majMarkDegree == 0) {
+                    newline.setAttributeNS(xlink, 'xlink:href', '#majline');
+                } else {
+                    newline.setAttributeNS(xlink, 'xlink:href', '#roseline');
+                }
+                newline.setAttributeNS(null, 'transform', 'rotate(' + i + ' 250 250)');
+                compassrose.appendChild(newline);
+            }
+        }
+
+        var writeDegs = document.createElementNS(xmlns, 'text'),
+            currentDeg = 0,
+            writeOffset = 0;
+        for (var i = 0; i < 99; i += (degreeInc / 360) * 100) {
+            var degree = document.createElementNS(xmlns, 'textPath');
+            degree.setAttributeNS(xlink, 'xlink:href', '#rosecircle');
+            var length = Math.log(i) * Math.LOG10E + 1 | 0;
+            if (length > 1) { writeOffset = 1; }
+            degree.setAttributeNS(null, 'startOffset', (i - writeOffset) + "%");
+            degree.textContent = currentDeg;
+            writeDegs.appendChild(degree);
+            currentDeg += degreeInc;
+        }
+        compassrose.appendChild(writeDegs);
+
+        function randomRot() {
+            var oldOrientation = newOrientation;
+            newOrientation = Math.floor(Math.random() * 240);
+            compassrose.animate([
+                { transform: 'rotate(' + oldOrientation + 'deg)' },
+                { transform: 'rotate(' + newOrientation + 'deg)' }
+            ], {
+                duration: Math.abs(oldOrientation - newOrientation) * 30,
+                fill: 'forwards'
+            }).onfinish = function () {
+                randomRot();
+            }
+        }
+        newOrientation = 0;
+        randomRot();
+    </script>
+
+    <!-- 鼠标跟随 -->
+    <script>
+        const compass = document.getElementById("compassrose");
+        const blob = document.getElementById("blob");
+
+        window.onpointermove = (event) => {
+            const { clientX, clientY } = event;
+
+            compass.style.left = `${clientX}px`;
+            blob.style.left = `${clientX}px`;
+            compass.style.top = `${clientY}px`;
+            blob.style.top = `${clientY}px`;
+
+            // blob.animate(
+            //     {
+            //         left: `${clientX}px`,
+            //         top: `${clientY}px`
+            //     },
+            //     { duration: 1300, fill: "forwards" }
+            // );
+        };
+
+    </script>
+
+</body>
+
+</html>

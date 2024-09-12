@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+{% load static %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/files_upload.css'%}">
+
+<link rel="stylesheet" href="{% static '/css/carousel_pro.css'%}">
+
+<link rel="stylesheet" href="{% static '/css/history.css'%}">
+
+<link rel="stylesheet" href="{% static '/css/table.css'%}">
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block content %}
+<div id="order_answer">
+</div>
+
+<div id="history_list" class="hide">
+    <div class="table-title">
+    <h3>历史记录</h3>
+    </div>
+    <table class="table table-striped table-hover" id="history_table">
+    <tbody class="table-hover">
+    </tbody>
+    </table>
+      
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block right-bar %}
+
+<h4 style="color: azure;">可上传多张图片</h4>
+
+<!-- 订单上传组件 -->
+<form id="upload-file-form-1" action="{% url 'order_create' %}" method="post" enctype="multipart/form-data">
+    <div id="upload-file-area">
+        <input type="file" name="avatars" id="avatars" multiple>
+    </div>
+    {% csrf_token %}
+    <!-- 待上传文件预览区域 -->
+    <div id="files_preview" style="color: rgb(85, 85, 85);">
+        <p>暂无待上传文件</p>
+    </div><br>
+    <!-- 填写博客额外需求 -->
+    <textarea type="text" name="extra_info" id="extra_info" placeholder="请在此处填写博客的额外需求"
+        style=" width:100% ; height: 90px; border: 1px solid rgb(133, 133, 133); overflow-y: auto; border-radius: 5px;"></textarea>
+    <button type="submit" class="custom-btn btn-13" value="提交" style="font-size: 14px;">提交</button><br>
+</form>
+<button id="get_history" class="custom-btn btn-13" id="get_history" data-value="1" style="font-size: 14px;">历史记录</button>
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block js %}
+
+<!-- 历史记录 -->
+<script src="{% static 'js/history.js' %}"></script>
+<!-- 单/多文件 预览/上传 -->
+<script src="{% static 'js/files_upload.js' %}"></script>
+<!-- 历史记录按钮 -->
+<script>
+    document.getElementById('get_history').addEventListener('click', function () {
+        window.location.href = "{% url 'write' %}"; // 替换为你想要重定向的URL
+    });
+</script>
+{% endblock %}

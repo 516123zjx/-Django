@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background-color: black;
+    }
+</style>
+
+<!-- 镜头css -->
+<style>
+    #compassrose {
+        position: absolute;
+        width: 20%;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        translate: -50% -50%;
+    }
+
+    #compassrose #roseline,
+    #compassrose #majline {
+        stroke: #eee;
+        stroke-width: 1.5;
+    }
+
+    #compassrose text {
+        font-family: Montserrat, sans-serif;
+        font-size: 10;
+        fill: #eee;
+    }
+</style>
+
+<body>
+    <!-- 镜头svg -->
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500"
+        id="compassrose">
+        <defs>
+            <symbol>
+                <line x1="40" y1="250" x2="50" y2="250" id="roseline" />
+                <line x1="40" y1="250" x2="60" y2="250" id="majline" />
+                <path d="M10,250a240,240 0 1,0 480,0a240,240 0 1,0 -480,0" id="rosecircle" />
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- 镜头svg脚本 -->
+    <script>
+        var lineInc = 2,
+            majMarkDegree = 10,
+            degreeInc = 30,
+            compassrose = document.getElementById("compassrose"),
+            xmlns = "http://www.w3.org/2000/svg",
+            xlink = "http://www.w3.org/1999/xlink";
+        if (lineInc > 0) {
+            for (var i = 0; i < 360; i += lineInc) {
+                var newline = document.createElementNS(xmlns, 'use');
+                if (i % majMarkDegree == 0) {
+                    newline.setAttributeNS(xlink, 'xlink:href', '#majline');
+                } else {
+                    newline.setAttributeNS(xlink, 'xlink:href', '#roseline');
+                }
+                newline.setAttributeNS(null, 'transform', 'rotate(' + i + ' 250 250)');
+                compassrose.appendChild(newline);
+            }
+        }
+
+        var writeDegs = document.createElementNS(xmlns, 'text'),
+            currentDeg = 0,
+            writeOffset = 0;
+        for (var i = 0; i < 99; i += (degreeInc / 360) * 100) {
+            var degree = document.createElementNS(xmlns, 'textPath');
+            degree.setAttributeNS(xlink, 'xlink:href', '#rosecircle');
+            var length = Math.log(i) * Math.LOG10E + 1 | 0;
+            if (length > 1) { writeOffset = 1; }
+            degree.setAttributeNS(null, 'startOffset', (i - writeOffset) + "%");
+            degree.textContent = currentDeg;
+            writeDegs.appendChild(degree);
+            currentDeg += degreeInc;
+        }
+        compassrose.appendChild(writeDegs);
+
+        function randomRot() {
+            var oldOrientation = newOrientation;
+            newOrientation = Math.floor(Math.random() * 240);
+            compassrose.animate([
+                { transform: 'rotate(' + oldOrientation + 'deg)' },
+                { transform: 'rotate(' + newOrientation + 'deg)' }
+            ], {
+                duration: Math.abs(oldOrientation - newOrientation) * 30,
+                fill: 'forwards'
+            }).onfinish = function () {
+                randomRot();
+            }
+        }
+        newOrientation = 0;
+        randomRot();
+    </script>
+
+    <!-- 指南针跟随 -->
+    <script>
+        const compass = document.getElementById("compassrose");
+
+        window.onpointermove = (event) => {
+            const { clientX, clientY } = event;
+
+            compass.style.left = `${clientX}px`;
+            compass.style.top = `${clientY}px`;
+
+        };
+    </script>
+
+</body>
+
+</html>

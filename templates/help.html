@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+
+{% block css %}
+<!-- 大纲 -->
+<style>
+    .outline {
+        width: 250px;
+        background-color: #ecf0f1;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .outline h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .outline ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .outline ul li {
+        margin: 10px 0;
+    }
+
+    .outline ul li a {
+        color: #2980b9;
+        text-decoration: none;
+    }
+
+    .outline ul li a:hover {
+        text-decoration: underline;
+    }
+    /* 正文区 */
+    .content {
+        overflow-y: auto;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- <div class="content">
+    <p>欢迎来到我们的平台！我们专注于为您提供一种全新的体验——通过简单的图片上传，即可一键生成个性化的出行计划和博客文案。</p><br><br>
+
+
+    <div class="section" id="section1">
+        <h2>我们能做什么</h2>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p>图片智能生成，旅行与博客双助力</p>
+                <p>1.
+                    摄影计划助手：上传您的旅行图片或相关风景照片，我们的智能系统将分析图片中的元素，结合丰富的旅行数据和用户偏好，为您定制出独一无二的出行计划。包括景点推荐，行程安排，交通建议等，让您的旅行更加顺畅、有趣。
+                </p>
+                <p>2.
+                    文案生成助手：无论是记录旅行中的点滴感悟，还是分享您的拍摄成果，我们的智能文案生成功能都能帮助您一臂之力。只需上传相关图片，我们的智能分析助手将结合图片内容和您的写作风格，为您生成情感真挚的博客文案。让您轻松成为旅行博主，分享您的精彩世界。
+                </p>
+                <p>我们致力于为您提供更便捷、更智能的旅行和写作体验。快来试试吧，让您的旅行和博客创作更加丰富多彩！</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="section2">
+        <h2>关于风景地标识别</h2>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p>我们利用先进的图像识别技术和庞大的地标数据库，为用户提供快捷、准确的风景地标识别服务。</p>
+                <p>通过本功能，您只需上传一张风景图片，我们的系统便能自动识别并匹配图片中的地标。无论是壮丽的自然景观，历史悠久的古建筑，还是现代都市的标志性建筑，我们都能为您准确识别并提供详细的地标信息。</p>
+                <p>识别结果将包括地标的名称、地理位置、简要介绍以及相关图片和旅游攻略等。这些信息将帮助您更深入地了解地标的历史文化、旅游价值以及周边景点，为您的旅行和摄影提供大力支持。</p>
+                <p>此外，我们还提供文案生成的互动功能，让您轻松编辑和分享识别结果，发现更多有趣的地标和旅行故事。</p>
+                <p>无论您是旅行爱好者、摄影师还是文化爱好者，我们的智能识别功能都能为您的旅途增添更多乐趣和价值。快来体验吧！</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="section3">
+        <h2>关于摄影博客助手</h2>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p>我们的摄影博客助手旨在为旅行和摄影爱好者提供一站式解决方案，帮助您轻松记录和分享旅途中的每一个精彩瞬间。</p>
+                <p>通过本功能，您可以将旅行照片上传到平台，我们的智能系统将自动分析照片中的元素，并为您生成个性化的博客文案。无论是拍摄技巧、旅行感悟还是景点介绍，我们都能为您提供丰富的创作素材和灵感。</p>
+                <p>此外，我们还提供多种模板和编辑工具，让您轻松美化和排版您的博客内容，快速分享至社交媒体平台，与全球旅行和摄影爱好者互动交流。</p>
+                <p>无论您是新手还是专业摄影师，我们的博客助手都能为您的创作提供大力支持。快来试试吧，让您的旅行博客更上一层楼！</p>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="content" style="font-family: Arial, sans-serif; color: #333;">
+    <p style="font-size: 16px; line-height: 1.5; margin-bottom: 20px;">欢迎来到我们的平台！我们专注于为您提供一种全新的体验——通过简单的图片上传，即可一键生成个性化的出行计划和博客文案。</p>
+
+    <div class="section" id="section1" style="margin-bottom: 40px;">
+        <h2 style="color: #444; font-size: 24px; margin-bottom: 10px;">我们能做什么</h2>
+        <div class="panel panel-default" style="background-color: #f7f7f7; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+            <div class="panel-body">
+                <p style="margin-bottom: 20px;">图片智能生成，旅行与博客双助力</p>
+                <p style="margin-bottom: 10px;">1. 摄影计划助手：上传您的旅行图片或相关风景照片，我们的智能系统将分析图片中的元素，结合丰富的旅行数据和用户偏好，为您定制出独一无二的出行计划。包括景点推荐，行程安排，交通建议等，让您的旅行更加顺畅、有趣。</p>
+                <p style="margin-bottom: 10px;">2. 文案生成助手：无论是记录旅行中的点滴感悟，还是分享您的拍摄成果，我们的智能文案生成功能都能帮助您一臂之力。只需上传相关图片，我们的智能分析助手将结合图片内容和您的写作风格，为您生成情感真挚的博客文案。让您轻松成为旅行博主，分享您的精彩世界。</p>
+                <p>我们致力于为您提供更便捷、更智能的旅行和写作体验。快来试试吧，让您的旅行和博客创作更加丰富多彩！</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="section2" style="margin-bottom: 40px;">
+        <h2 style="color: #444; font-size: 24px; margin-bottom: 10px;">关于风景地标识别</h2>
+        <div class="panel panel-default" style="background-color: #f7f7f7; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+            <div class="panel-body">
+                <p style="margin-bottom: 10px;">我们利用先进的图像识别技术和庞大的地标数据库，为用户提供快捷、准确的风景地标识别服务。</p>
+                <p style="margin-bottom: 10px;">通过本功能，您只需上传一张风景图片，我们的系统便能自动识别并匹配图片中的地标。无论是壮丽的自然景观，历史悠久的古建筑，还是现代都市的标志性建筑，我们都能为您准确识别并提供详细的地标信息。</p>
+                <p style="margin-bottom: 10px;">识别结果将包括地标的名称、地理位置、简要介绍以及相关图片和旅游攻略等。这些信息将帮助您更深入地了解地标的历史文化、旅游价值以及周边景点，为您的旅行和摄影提供大力支持。</p>
+                <p style="margin-bottom: 10px;">此外，我们还提供文案生成的互动功能，让您轻松编辑和分享识别结果，发现更多有趣的地标和旅行故事。</p>
+                <p>无论您是旅行爱好者、摄影师还是文化爱好者，我们的智能识别功能都能为您的旅途增添更多乐趣和价值。快来体验吧！</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="section3">
+        <h2 style="color: #444; font-size: 24px; margin-bottom: 10px;">关于摄影博客助手</h2>
+        <div class="panel panel-default" style="background-color: #f7f7f7; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+            <div class="panel-body">
+                <p style="margin-bottom: 10px;">我们的摄影博客助手旨在为旅行和摄影爱好者提供一站式解决方案，帮助您轻松记录和分享旅途中的每一个精彩瞬间。</p>
+                <p style="margin-bottom: 10px;">通过本功能，您可以将旅行照片上传到平台，我们的智能系统将自动分析照片中的元素，并为您生成个性化的博客文案。无论是拍摄技巧、旅行感悟还是景点介绍，我们都能为您提供丰富的创作素材和灵感。</p>
+                <p style="margin-bottom: 10px;">此外，我们还提供多种模板和编辑工具，让您轻松美化和排版您的博客内容，快速分享至社交媒体平台，与全球旅行和摄影爱好者互动交流。</p>
+                <p>无论您是新手还是专业摄影师，我们的博客助手都能为您的创作提供大力支持。快来试试吧，让您的旅行博客更上一层楼！</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+
+{% block right-bar %}
+<!-- <div class="outline">
+    <h3>帮助页大纲</h3>
+    <ul>
+        <li><a href="#section1">我们能做什么</a></li>
+        <li><a href="#section2">关于风景地标识别</a></li>
+        <li><a href="#section3">关于摄影博客助手</a></li>
+    </ul>
+</div> -->
+<div class="outline" style="background-color: #f0f0f0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; width: 300px; margin: 20px auto;">
+    <h3 style="color: #333; font-family: Arial, sans-serif;">帮助页大纲</h3>
+    <ul style="list-style: none; padding: 0;">
+        <li style="margin-bottom: 10px;"><a href="#section1" style="text-decoration: none; color: #555;">我们能做什么</a></li>
+        <li style="margin-bottom: 10px;"><a href="#section2" style="text-decoration: none; color: #555;">关于风景地标识别</a></li>
+        <li><a href="#section3" style="text-decoration: none; color: #555;">关于摄影博客助手</a></li>
+    </ul>
+</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+
+.profile {
+    /* border: 2px solid black; */
+    height: 140px;
+    width: 110px;
+}
+#profile_submit{
+    position:relative;
+    top:110px;
+    left:15px;
+}
+
+
+/* 确保图片重叠 */
+#upload-file-area,
+#files_preview {
+    position: absolute;
+}
+
+/* 确保图片输入框在最上层 */
+#upload-file-area {
+    z-index: 2;
+}
+
+#files_preview {
+    z-index: 1;
+}
+
+/* 头像形状大小 */
+#upload-file-area,
+#files_preview {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgb(99, 99, 99);
+}
+
+#upload-file-area input,
+#files_preview img {
+    cursor: pointer;
+    border-radius: 50%;
+    width: 98px;
+    height: 98px;
+    border: 2px solid rgb(241, 241, 241);
+}
+
+/* 隐藏实际输入区域 */
+#upload-file-area input {
+    opacity: 0;
+}
+
+/* 隐藏待上传文件信息 */
+#files_preview p {
+    display:none;
+}
